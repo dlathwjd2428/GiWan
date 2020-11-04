@@ -108,9 +108,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		InvalidateRect(hWnd, NULL, true);
 		break;
 	case WM_TIMER:
-		ImagePoint.x++;
-		if (ImagePoint.x > 3)
-			ImagePoint.x = 0;
+		if (iDirection != NULL)
+		{
+			ImagePoint.x++;
+			if (ImagePoint.x > 3)
+				ImagePoint.x = 0;
+		}
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
