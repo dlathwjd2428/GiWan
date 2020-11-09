@@ -2,6 +2,8 @@
 
 GameManager::GameManager()
 {
+	m_iTurn = 1;
+	m_bSelectState = false;
 }
 
 void GameManager::LoadingGame(HWND hWnd)
@@ -27,10 +29,31 @@ void GameManager::LoadingGame(HWND hWnd)
 	//플레이어설정
 	m_arrPlayer[PLAYER_BLACK].SetPlayer(PLAYER_BLACK);
 	m_arrPlayer[PLAYER_WHITE].SetPlayer(PLAYER_WHITE);
+	//정보업데이트
+	UpdateGame();
 }
 
-void GameManager::DrawMap(HDC hdc)
+void GameManager::UpdateGame()
 {
+	//플레이어 턴 업데이트
+	if (m_iTurn % 2 == 0)
+	{
+		m_iPlayer = PLAYER_WHITE;
+		m_iEnemy = PLAYER_BLACK;
+	}
+	else
+	{
+		m_iPlayer = PLAYER_BLACK;
+		m_iEnemy = PLAYER_WHITE;
+	}	
+	//플레이어 정보들 업데이트
+	m_arrPlayer[PLAYER_BLACK].UpdatePlayer();
+	m_arrPlayer[PLAYER_WHITE].UpdatePlayer();
+}
+
+void GameManager::GameDraw(HDC hdc)
+{
+	//맵그리기
 	for (int y = 0; y < Y; y++)
 	{
 		for (int x = 0; x < X; x++)
@@ -38,12 +61,19 @@ void GameManager::DrawMap(HDC hdc)
 			BitMapManager::GetInstance()->DrawBitMap(hdc, m_arrMap[y][x].m_iIndex, m_arrMap[y][x].m_Rect);
 		}
 	}
-}
-
-void GameManager::DrawPiece(HDC hdc)
-{
+	//플레이어말그리기
 	m_arrPlayer[PLAYER_BLACK].DrawPiece(hdc);
 	m_arrPlayer[PLAYER_WHITE].DrawPiece(hdc);
+
+	//움직임범위그리기
+	if (m_bSelectState == true)
+		m_arrPlayer[m_iPlayer].DrawRange(hdc);
+}
+
+bool GameManager::ClicK(POINT pt)
+{
+	m_bSelectState = m_arrPlayer[m_iPlayer].CheckPieceRect(pt, m_arrPlayer[m_iEnemy].GetRectArr());
+	return m_bSelectState;
 }
 
 GameManager::~GameManager()

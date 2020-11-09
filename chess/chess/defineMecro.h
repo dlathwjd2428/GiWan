@@ -4,7 +4,7 @@
 #define PINK 255
 #define X 8
 #define Y 8
-#define PIECE_MAX 125
+#define PIECE_MAX 16
 struct RESOURCE
 {
 	int m_iIndex;

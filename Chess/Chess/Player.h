@@ -5,11 +5,17 @@ class Player
 {
 private:
 	int m_iType;
-	Piece m_arrPiece[PIECE_MAX];
+	bool m_bClickState;
+	RECT m_arrPieceRect[PIECE_MAX];
+	Piece* m_arrPiece[PIECE_MAX];
 public:
 	void SetPlayer(int Type);
 	void SetPiece();
 	void DrawPiece(HDC hdc);
+	void DrawRange(HDC hdc);
+	bool CheckPieceRect(POINT pt, RECT* Enemy);
+	void UpdatePlayer();
+	inline RECT* GetRectArr() { return m_arrPieceRect; }
 	Player();
 	~Player();
 };

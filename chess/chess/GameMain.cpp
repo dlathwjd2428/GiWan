@@ -40,16 +40,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
+	POINT pt;
 	static GameManager s_GameManager;
 	switch (iMessage)
 	{
 	case WM_CREATE:
 		s_GameManager.LoadingGame(hWnd);
 		return 0;
+	case WM_LBUTTONDOWN:
+		pt.x = LOWORD(lParam);
+		pt.y = HIWORD(lParam);
+		if (s_GameManager.ClicK(pt) == true)
+			InvalidateRect(hWnd, NULL, true);
+		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		s_GameManager.DrawMap(hdc);
-		s_GameManager.DrawPiece(hdc);
+		s_GameManager.GameDraw(hdc);
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
