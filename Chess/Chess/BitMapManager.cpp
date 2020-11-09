@@ -1,37 +1,32 @@
 #include "BitMapManager.h"
 
-BitMapManager* BitMapManager::m_BitManager = NULL;
+BitMapManager* BitMapManager::m_hThis = NULL;
 BitMapManager::BitMapManager()
 {
 }
 
-void BitMapManager::SetBitMaps(HWND hWnd, HINSTANCE hInst)
+void BitMapManager::SetBitMapArr(HWND hWnd)
 {
-	HDC hdc;
-	hdc = GetDC(hWnd);
-	char buf[256];
-	for (int i = 0; i < IMAGE_MAX; i++)
+	HDC hdc = GetDC(hWnd);
+	TCHAR buf[256];
+	for (int i = IMAGE_START; i < IMAGE_MAX; i++)
 	{
-		wsprintf(buf, "Chess//block0%d.bmp", i);
-		if(i > 2)
-			wsprintf(buf, "Chess//block_w_0%d.bmp", i - 3);
-		if (i > 8)
-			wsprintf(buf, "Chess//block_b_0%d.bmp", i - 9);
-		m_Images[i].SetBitMap(hdc, hInst, buf);
+		if (i < IMAGE_BLACK_PAWN)
+			wsprintf(buf, L"chess/block0%d.bmp", i);
+		else if(i >= IMAGE_BLACK_PAWN && i < IMAGE_WHITE_PAWN)
+			wsprintf(buf, L"chess/block_b_0%d.bmp", i - IMAGE_BLACK_PAWN);
+		else
+			wsprintf(buf, L"chess/block_w_0%d.bmp", i - IMAGE_WHITE_PAWN);
+		m_arrBitMap[i].SetBitMap(hdc, buf);
 	}
+	ReleaseDC(hWnd, hdc);
 }
 
-void BitMapManager::ShowBitMaps(HDC hdc)
+void BitMapManager::DrawBitMap(HDC hdc, int Index, RECT rect, int Option)
 {
-	int x = 0, y = 0;
-	for (int i = 0; i < IMAGE_MAX; i++)
-	{
-		m_Images[i].ShowBitMap(hdc, x, y);
-		x += 50;
-		if (i % 5 == 0)
-			y += 50;
-	}
+	m_arrBitMap[Index].DrawBitMap(hdc, rect, Option);
 }
+
 BitMapManager::~BitMapManager()
 {
 }

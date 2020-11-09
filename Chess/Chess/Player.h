@@ -1,14 +1,15 @@
 #pragma once
-#include"ChessPiece.h"
-
-#define CHESS_MAX 16
+#include"Piece.h"
 
 class Player
 {
 private:
-	ChessPiece m_ChessPiece[CHESS_MAX];
+	int m_iType;
+	Piece m_arrPiece[PIECE_MAX];
 public:
-	void SetChessPiece();
+	void SetPlayer(int Type);
+	void SetPiece();
+	void DrawPiece(HDC hdc);
 	Player();
 	~Player();
 };

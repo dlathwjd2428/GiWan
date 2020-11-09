@@ -1,16 +1,15 @@
 #pragma once
 #include<windows.h>
+#include"defineMecro.h"
 
 class BitMap
 {
 private:
-	HBITMAP m_Image;
-	HBITMAP m_OldImage;
 	HDC m_hMemDC;
-	int m_iSizeX, m_iSizeY;
+	HBITMAP m_Image, m_OldImage;
 public:
-	void SetBitMap(HDC hdc, HINSTANCE hInst, char* FileName);
-	void ShowBitMap(HDC hdc, int x, int y);
+	void SetBitMap(HDC hdc, LPWSTR FileName);
+	void DrawBitMap(HDC hdc, RECT rect, int Option = NORMAL);
 	BitMap();
 	~BitMap();
 };

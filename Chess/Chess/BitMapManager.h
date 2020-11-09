@@ -1,22 +1,20 @@
 #pragma once
 #include"BitMap.h"
 
-#define IMAGE_MAX 15
-
 class BitMapManager
 {
 private:
-	BitMap m_Images[15];
-	static BitMapManager* m_BitManager;
+	static BitMapManager* m_hThis;
+	BitMap m_arrBitMap[IMAGE_MAX];
 public:
-	static BitMapManager* GetBitManager()
+	static BitMapManager* GetInstance()
 	{
-		if (m_BitManager == NULL)
-			m_BitManager = new BitMapManager;
-		return m_BitManager;
+		if (m_hThis == NULL)
+			m_hThis = new BitMapManager;
+		return m_hThis;
 	}
-	void SetBitMaps(HWND hWnd, HINSTANCE hInst);
-	void ShowBitMaps(HDC hdc);
+	void SetBitMapArr(HWND hWnd);
+	void DrawBitMap(HDC hdc, int Index, RECT rect, int Option = NORMAL);
 	BitMapManager();
 	~BitMapManager();
 };

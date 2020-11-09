@@ -1,2 +1,7 @@
-﻿  ChessMain.cpp
-  Chess.vcxproj -> C:\Users\A07\Desktop\12\Chess\Debug\Chess.exe
+﻿  BitMapManager.cpp
+  GameMain.cpp
+  GameManager.cpp
+  Piece.cpp
+  Player.cpp
+  코드를 생성하고 있습니다...
+  chess.vcxproj -> C:\Users\goflv\Desktop\chess\Debug\chess.exe

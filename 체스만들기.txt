@@ -1,0 +1,38 @@
+1.이미지등록
+- BitMap : 멤버변수 : HDC m_hMemDC, HBITMAP m_Image, m_OldImage
+	: 멤버변수 : SIZE m_ImageSize
+	: 멤버함수 : void SetImage(HDC, LPWSTR)
+	: 멤버함수 : void DrawImage(HDC, POINT, OPTION)
+- BitMapManager(싱글톤) : 하나만 존재해야함(전체 이미지파일이 여러개일필요x)
+		        : 다른곳에서 접근하기 쉽도록
+	: 멤버변수 : 싱글톤 BitMapManager, m_arrBitMap[IMAGE_MAX]
+	: 멤버함수 : 싱글톤호출, void SetBitMapArr(HWND), BitMap GetBitMap(int Index)
+CLEAR!
+
+2. 맵, 말들 출력
+CLEAR!
+	1. 게임매니저 클래스 생성 후 맵 타일 그리기
+- GameManager : main.cpp에 static으로 변수선언
+	: 멤버변수 : m_arrPlayer[PLAYER_MAX], m_arrMap[Y][X], m_iTurn
+	: 멤버함수 : void SetDefaultGaem() : 초기 맵위치 설정, 플레이어정보설정
+	: 멤버함수 : void DrawMap(HDC hd) : 맵그리기
+	: 멤버함수 : 
+
+	2. 플레이어 클래스만들기
+- Player  : 멤버변수 : vector<Piece>m_parrPiece : 말들 정보변수
+	: 멤버변수 : 플레이어타입, 플레이어 Rect값들
+	: 멤버함수 : 플레이어 설정함수
+
+	3. Piece클래스만들기(순수가상함수로 구현) - 일단 만듬
+-Piece : 멤버변수 : 이미지 위치, 이미지Rect, 이미지비트맵
+3. 이동범위, 공격범위 설정
+	1.이동범위설정 : Piece의 자식클래스들에 개별적으로 설정(벡터)사용
+	:진행 순서 클릭 -> 범위표출 따라서 클릭부터 진행
+	: 상대방과 본인의 Rect값들을 가져와서 비교 후 없으면 설정
+	:우선 본인()과 상대방()Rect값들 가져오기 CLEAR
+	2. 공격범위설정
+	: 같다 단, 조건은 본인의 것은 없고 상대방이 있어야한다
+	: RGB컬러는 255,255,255이다.
+
+4. 이동
+폰 이동은 구현
