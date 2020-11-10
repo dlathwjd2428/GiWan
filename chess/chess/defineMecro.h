@@ -5,6 +5,8 @@
 #define X 8
 #define Y 8
 #define PIECE_MAX 16
+#define NONE -1
+#define FALSE -2
 struct RESOURCE
 {
 	int m_iIndex;
@@ -36,4 +38,3 @@ enum IMAGE
 	IMAGE_WHITE_KING,
 	IMAGE_MAX
 };
-

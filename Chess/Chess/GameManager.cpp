@@ -47,8 +47,8 @@ void GameManager::UpdateGame()
 		m_iEnemy = PLAYER_WHITE;
 	}	
 	//플레이어 정보들 업데이트
-	m_arrPlayer[PLAYER_BLACK].UpdatePlayer();
-	m_arrPlayer[PLAYER_WHITE].UpdatePlayer();
+	m_arrPlayer[PLAYER_BLACK].UpdatePlayer(m_arrPlayer[PLAYER_WHITE].GetRectArr());
+	m_arrPlayer[PLAYER_WHITE].UpdatePlayer(m_arrPlayer[PLAYER_BLACK].GetRectArr());
 }
 
 void GameManager::GameDraw(HDC hdc)
@@ -70,10 +70,23 @@ void GameManager::GameDraw(HDC hdc)
 		m_arrPlayer[m_iPlayer].DrawRange(hdc);
 }
 
-bool GameManager::ClicK(POINT pt)
+void GameManager::ClicK(POINT pt)
 {
-	m_bSelectState = m_arrPlayer[m_iPlayer].CheckPieceRect(pt, m_arrPlayer[m_iEnemy].GetRectArr());
-	return m_bSelectState;
+	int EnemyIndex;
+	UpdateGame();
+	m_bSelectState = m_arrPlayer[m_iPlayer].Click(pt);
+	if (m_bSelectState == true)
+	{
+		EnemyIndex = m_arrPlayer[m_iPlayer].Move(pt);	
+		if (EnemyIndex != FALSE)
+		{
+			UpdateGame();
+			m_arrPlayer[m_iEnemy].DeletePiece(m_arrPlayer[m_iPlayer].GetRectArr()[EnemyIndex]);
+			m_iTurn++;
+			m_bSelectState = false;			
+		}
+		
+	}
 }
 
 GameManager::~GameManager()

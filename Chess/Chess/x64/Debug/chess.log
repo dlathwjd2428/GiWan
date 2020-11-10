@@ -1,2 +1,4 @@
 ﻿  GameManager.cpp
+c:\users\a07\desktop\chess\chess\definemecro.h(9): warning C4005: 'FALSE': 매크로 재정의
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\minwindef.h(71): note: 'FALSE'의 이전 정의를 참조하십시오.
   chess.vcxproj -> C:\Users\A07\Desktop\Chess\x64\Debug\chess.exe

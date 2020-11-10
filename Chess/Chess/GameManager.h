@@ -14,7 +14,7 @@ public:
 	void LoadingGame(HWND hWnd);
 	void UpdateGame();
 	void GameDraw(HDC hdc);
-	bool ClicK(POINT pt);
+	void ClicK(POINT pt);
 	GameManager();
 	~GameManager();
 };

@@ -2,6 +2,7 @@
 
 Player::Player()
 {
+	m_iSelectIndex = NONE;
 }
 
 void Player::SetPlayer(int Type)
@@ -12,8 +13,6 @@ void Player::SetPlayer(int Type)
 	SetPiece();
 	//말선택상태 초기값설정
 	m_bClickState = false;
-	//정보들 업데이트
-	UpdatePlayer();
 }
 
 void Player::SetPiece()
@@ -97,40 +96,70 @@ void Player::DrawRange(HDC hdc)
 	for (int i = 0; i < PIECE_MAX; i++)
 		m_arrPiece[i]->DrawRange(hdc);
 }
-bool Player::CheckPieceRect(POINT pt, RECT* Enemy)
+
+bool Player::Click(POINT pt)
 {
+	
+	for (int i = 0; i < PIECE_MAX; i++)
+	{
+		if (m_bClickState == true && m_arrPiece[i]->GetClickState() == true && m_arrPiece[i]->ClickCheck(pt) == true)
+		{
+			m_bClickState = false;
+			m_arrPiece[i]->SetClickState(false);
+			break;
+		}		
+		else if (m_bClickState == false && m_arrPiece[i]->MoveSizeCheck() == true)
+		{
+			m_bClickState = m_arrPiece[i]->ClickCheck(pt);
+			if (m_bClickState == true)
+			{
+				m_arrPiece[i]->SetClickState(true);
+				m_iSelectIndex = i;
+				break;
+			}
+		}
+	}
+	
+	return m_bClickState;
+}
+
+int Player::Move(POINT pt)
+{
+	int MoveCheck = FALSE;
+	MoveCheck = m_arrPiece[m_iSelectIndex]->Move(pt);
+	if (MoveCheck != FALSE)
+		m_bClickState = false;
+	//for (int i = 0; i < PIECE_MAX; i++)
+	//{
+		//MoveCheck = m_arrPiece[i]->Move(pt);
+		//if (MoveCheck != FALSE)
+		//{
+			//m_bClickState = false;
+			//break;			
+		//}
+	//}
+	return MoveCheck;
+}
+void Player::UpdatePlayer(RECT* Enemy)
+{
+	//말들rect값 성정
+	for (int i = 0; i < PIECE_MAX; i++)
+		m_arrPieceRect[i] = m_arrPiece[i]->GetRect();
+	//말들범위설정
 	RECT tmp[PIECE_MAX];
 	for (int i = 0; i < PIECE_MAX; i++)
 		tmp[i] = Enemy[i];
 	for (int i = 0; i < PIECE_MAX; i++)
-	{
-		if (m_bClickState == false)
-		{
-			if (m_arrPiece[i]->ClickCheck(pt) == true)
-			{			
-				m_bClickState = true;
-				m_arrPiece[i]->SetRange(m_arrPieceRect, tmp);
-				break;
-			}
-		}
-		else
-		{
-			if (m_arrPiece[i]->GetClickState() == true && m_arrPiece[i]->ClickCheck(pt) == true)
-			{
-				m_bClickState = false;
-				m_arrPiece[i]->SetRange(m_arrPieceRect, tmp);
-				break;
-			}
-		}
-	}	
-	return m_bClickState;
+		m_arrPiece[i]->SetRange(m_arrPieceRect, tmp);
 }
 
-void Player::UpdatePlayer()
+void Player::DeletePiece(RECT rect)
 {
-	//말들rect값 저장
 	for (int i = 0; i < PIECE_MAX; i++)
-		m_arrPieceRect[i] = m_arrPiece[i]->GetRect();
+	{
+		if (m_arrPiece[i]->Delete(rect) == true)
+			break;
+	}
 }
 
 Player::~Player()

@@ -5,6 +5,7 @@ class Player
 {
 private:
 	int m_iType;
+	int m_iSelectIndex;
 	bool m_bClickState;
 	RECT m_arrPieceRect[PIECE_MAX];
 	Piece* m_arrPiece[PIECE_MAX];
@@ -13,8 +14,10 @@ public:
 	void SetPiece();
 	void DrawPiece(HDC hdc);
 	void DrawRange(HDC hdc);
-	bool CheckPieceRect(POINT pt, RECT* Enemy);
-	void UpdatePlayer();
+	void UpdatePlayer(RECT* Enemy);
+	bool Click(POINT pt);
+	int Move(POINT pt);
+	void DeletePiece(RECT rect);
 	inline RECT* GetRectArr() { return m_arrPieceRect; }
 	Player();
 	~Player();

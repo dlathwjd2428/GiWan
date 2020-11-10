@@ -7,15 +7,21 @@ class Piece
 protected:
 	RESOURCE m_Image;
 	std::vector<RECT> m_vMoveRange;
+	std::vector<RECT> m_vAtkRange;
 	int m_iType;
+	int m_iMoveCount;
 	bool m_bClickState;
 public:
 	void SetPiece(int Index, POINT pt);
 	void DrawPiece(HDC hdc);
 	void DrawRange(HDC hdc);
+	int Move(POINT pt);
 	bool ClickCheck(POINT pt);
+	bool Delete(RECT rect);
+	bool MoveSizeCheck();
 	inline RECT GetRect() { return m_Image.m_Rect; }
 	inline bool GetClickState() { return m_bClickState; }
+	inline void SetClickState(bool tfState) { m_bClickState = tfState; }
 	virtual void SetRange(RECT* Player, RECT* Enemy) = 0;
 	Piece();
 	~Piece();
