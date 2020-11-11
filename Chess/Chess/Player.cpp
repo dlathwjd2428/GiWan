@@ -174,10 +174,46 @@ bool Player::PieceCheck()
 	return true;
 }
 
-void Player::PawnTest()
+void Player::PawnTest(HWND hWnd)
 {
+	int tmpIndex;
+	int ImageIndex, Add = 0;
+	POINT tmpPoint;
+	if (m_iType == PLAYER_WHITE)
+		Add = 6;
 	for (int i = 0; i < 8; i++)
-		m_arrPiece[i]->PawnChange();
+	{ 
+		tmpIndex = m_arrPiece[i]->PawnChange(hWnd);
+		if (tmpIndex != NONE)
+		{
+			tmpPoint = { m_arrPiece[i]->GetRect().left, m_arrPiece[i]->GetRect().top };
+			delete m_arrPiece[i];
+			switch (tmpIndex)
+			{
+			case 0:
+				m_arrPiece[i] = new Pawn;
+				ImageIndex = IMAGE_BLACK_PAWN + Add;
+				break;
+			case 1:
+				m_arrPiece[i] = new Knight;
+				ImageIndex = IMAGE_BLACK_KNIGHT+ Add;
+				break;
+			case 2:
+				m_arrPiece[i] = new Rock;
+				ImageIndex = IMAGE_BLACK_ROCK + Add;
+				break;
+			case 3:
+				m_arrPiece[i] = new Bishop;
+				ImageIndex = IMAGE_BLACK_BISHOP + Add;
+				break;
+			case 4:
+				m_arrPiece[i] = new Queen;
+				ImageIndex = IMAGE_BLACK_QUEEN + Add;
+				break;
+			}
+			m_arrPiece[i]->SetPiece(ImageIndex, tmpPoint);
+		}
+	}
 }
 
 Player::~Player()

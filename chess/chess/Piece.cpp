@@ -130,18 +130,84 @@ bool Piece::PieceCheck()
 	return false;
 }
 
-void Piece::PawnChange()
+int Piece::PawnChange(HWND hWnd)
 {
+	int Add;
 	if (m_Image.m_iIndex == IMAGE_WHITE_PAWN)
 	{
+		Add = IMAGE_WHITE_PAWN;
 		if (m_Image.m_Rect.bottom == IMAGE_SIZE * 8)
-			system("pause");
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				switch (i)
+				{
+				case 0:
+					if (MessageBox(hWnd, L"폰으로 바꾸시겠습니까?", L"폰바꾸기", MB_OKCANCEL) == IDOK)
+						return 0;
+					break;
+				case 1:
+					if (MessageBox(hWnd, L"나이트으로 바꾸시겠습니까?", L"나이트바꾸기", MB_OKCANCEL) == IDOK)
+						return 1;
+					break;
+				case 2:
+					if (MessageBox(hWnd, L"룩으로 바꾸시겠습니까?", L"룩바꾸기", MB_OKCANCEL) == IDOK)
+						return 2;
+					break;
+				case 3:
+					if (MessageBox(hWnd, L"비숍으로 바꾸시겠습니까?", L"비숍바꾸기", MB_OKCANCEL) == IDOK)
+						return 3;
+					break;
+				case 4:
+					if (MessageBox(hWnd, L"퀸으로 바꾸시겠습니까?", L"퀸바꾸기", MB_OKCANCEL) == IDOK)
+						return 4;
+					break;
+				}
+				if (i == 4)
+					i = 0;
+			}
+		}
+			
+			
 	}
 	else if(m_Image.m_iIndex == IMAGE_BLACK_PAWN)
 	{
 		if (m_Image.m_Rect.top == 0)
-			system("pause");
+		{
+			Add = IMAGE_BLACK_PAWN;
+			for (int i = 0; i < 5;)
+			{
+				switch (i)
+				{
+				case 0:
+					if (MessageBox(hWnd, L"폰으로 바꾸시겠습니까?", L"폰바꾸기", MB_OKCANCEL) == IDOK)
+						return 0;
+					break;
+				case 1:
+					if (MessageBox(hWnd, L"나이트으로 바꾸시겠습니까?", L"나이트바꾸기", MB_OKCANCEL) == IDOK)
+						return 1;
+					break;
+				case 2:
+					if (MessageBox(hWnd, L"룩으로 바꾸시겠습니까?", L"룩바꾸기", MB_OKCANCEL) == IDOK)
+						return 2;
+					break;
+				case 3:
+					if (MessageBox(hWnd, L"비숍으로 바꾸시겠습니까?", L"비숍바꾸기", MB_OKCANCEL) == IDOK)
+						return 3;
+					break;
+				case 4:
+					if (MessageBox(hWnd, L"퀸으로 바꾸시겠습니까?", L"퀸바꾸기", MB_OKCANCEL) == IDOK)
+						return 4;
+					break;
+				}
+				if (i == 4)
+					i = 0;
+				else
+					i++;
+			}
+		}
 	}
+	return NONE;
 }
 Piece::~Piece()
 {

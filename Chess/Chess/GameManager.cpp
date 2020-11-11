@@ -35,8 +35,6 @@ void GameManager::LoadingGame(HWND hWnd)
 
 void GameManager::UpdateGame()
 {
-	//폰변화체크
-	m_arrPlayer[m_iPlayer].PawnTest();
 	//플레이어 턴 업데이트
 	if (m_iTurn % 2 == 0)
 	{
@@ -90,12 +88,12 @@ void GameManager::ClicK(POINT pt)
 			m_iTurn++;
 			m_bSelectState = false;			
 		}	
-	}
-		
+	}	
 }
 
 bool GameManager::GameCheck(HWND hWnd)
 {
+	m_arrPlayer[m_iPlayer].PawnTest(hWnd);
 	//남아있는 말들 개수 체크
 	if (m_arrPlayer[m_iEnemy].PieceCheck() == true)
 	{

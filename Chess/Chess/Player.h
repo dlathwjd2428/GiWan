@@ -20,7 +20,7 @@ public:
 	bool Click(POINT pt);
 	int Move(POINT pt);
 	void DeletePiece(RECT rect);
-	void PawnTest();
+	void PawnTest(HWND hWnd);
 	inline RECT* GetRectArr() { return m_arrPieceRect; }
 	Player();
 	~Player();

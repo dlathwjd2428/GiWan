@@ -23,7 +23,7 @@ public:
 	void SetManager();
 	bool KingCheck(RECT rect);
 	bool PieceCheck();
-	void PawnChange();
+	int PawnChange(HWND hWnd);
 	int CheckIntersectRect(RECT* Player, RECT* Enemy, RECT atkRect, RECT moveRect);
 	inline RECT GetRect() { return m_Image.m_Rect; }
 	inline bool GetClickState() { return m_bClickState; }

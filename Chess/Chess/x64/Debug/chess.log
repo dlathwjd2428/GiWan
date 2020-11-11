@@ -1,4 +1,10 @@
-﻿  GameManager.cpp
-c:\users\a07\desktop\chess\chess\definemecro.h(9): warning C4005: 'FALSE': 매크로 재정의
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\minwindef.h(71): note: 'FALSE'의 이전 정의를 참조하십시오.
+﻿  Piece.cpp
+c:\users\a07\desktop\chess\chess\piece.cpp(47): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(58): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(79): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(106): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(109): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(120): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(223): warning C4101: 'nullRect' :참조되지 않은 지역 변수입니다.
+c:\users\a07\desktop\chess\chess\piece.cpp(91): warning C4715: 'Piece::Delete': 모든 제어 경로에서 값을 반환하지는 않습니다.
   chess.vcxproj -> C:\Users\A07\Desktop\Chess\x64\Debug\chess.exe
