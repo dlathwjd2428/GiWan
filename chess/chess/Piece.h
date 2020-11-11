@@ -8,6 +8,7 @@ protected:
 	RESOURCE m_Image;
 	std::vector<RECT> m_vMoveRange;
 	std::vector<RECT> m_vAtkRange;
+	int m_iAdd;
 	int m_iType;
 	int m_iMoveCount;
 	bool m_bClickState;
@@ -15,10 +16,15 @@ public:
 	void SetPiece(int Index, POINT pt);
 	void DrawPiece(HDC hdc);
 	void DrawRange(HDC hdc);
-	int Move(POINT pt);
+	bool Move(POINT pt);
 	bool ClickCheck(POINT pt);
 	bool Delete(RECT rect);
 	bool MoveSizeCheck();
+	void SetManager();
+	bool KingCheck(RECT rect);
+	bool PieceCheck();
+	void PawnChange();
+	int CheckIntersectRect(RECT* Player, RECT* Enemy, RECT atkRect, RECT moveRect);
 	inline RECT GetRect() { return m_Image.m_Rect; }
 	inline bool GetClickState() { return m_bClickState; }
 	inline void SetClickState(bool tfState) { m_bClickState = tfState; }
@@ -33,6 +39,7 @@ class Pawn : public Piece
 private:
 public:
 	void SetRange(RECT* Player, RECT* Enemy);
+	
 	Pawn();
 	~Pawn();
 };

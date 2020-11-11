@@ -15,9 +15,12 @@ public:
 	void DrawPiece(HDC hdc);
 	void DrawRange(HDC hdc);
 	void UpdatePlayer(RECT* Enemy);
+	bool PieceCheck();
+	bool KingCheck(RECT KingRect);
 	bool Click(POINT pt);
 	int Move(POINT pt);
 	void DeletePiece(RECT rect);
+	void PawnTest();
 	inline RECT* GetRectArr() { return m_arrPieceRect; }
 	Player();
 	~Player();

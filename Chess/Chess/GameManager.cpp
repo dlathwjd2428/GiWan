@@ -35,20 +35,24 @@ void GameManager::LoadingGame(HWND hWnd)
 
 void GameManager::UpdateGame()
 {
+	//폰변화체크
+	m_arrPlayer[m_iPlayer].PawnTest();
 	//플레이어 턴 업데이트
 	if (m_iTurn % 2 == 0)
 	{
 		m_iPlayer = PLAYER_WHITE;
 		m_iEnemy = PLAYER_BLACK;
+		m_iKingIndex = BLACK_KING;
 	}
 	else
 	{
 		m_iPlayer = PLAYER_BLACK;
 		m_iEnemy = PLAYER_WHITE;
+		m_iKingIndex = WHITE_KING;
 	}	
 	//플레이어 정보들 업데이트
 	m_arrPlayer[PLAYER_BLACK].UpdatePlayer(m_arrPlayer[PLAYER_WHITE].GetRectArr());
-	m_arrPlayer[PLAYER_WHITE].UpdatePlayer(m_arrPlayer[PLAYER_BLACK].GetRectArr());
+	m_arrPlayer[PLAYER_WHITE].UpdatePlayer(m_arrPlayer[PLAYER_BLACK].GetRectArr());	
 }
 
 void GameManager::GameDraw(HDC hdc)
@@ -72,23 +76,44 @@ void GameManager::GameDraw(HDC hdc)
 
 void GameManager::ClicK(POINT pt)
 {
+
 	int EnemyIndex;
 	UpdateGame();
 	m_bSelectState = m_arrPlayer[m_iPlayer].Click(pt);
 	if (m_bSelectState == true)
 	{
 		EnemyIndex = m_arrPlayer[m_iPlayer].Move(pt);	
-		if (EnemyIndex != FALSE)
-		{
+		if (EnemyIndex != NONE)
+		{	
 			UpdateGame();
-			m_arrPlayer[m_iEnemy].DeletePiece(m_arrPlayer[m_iPlayer].GetRectArr()[EnemyIndex]);
+			m_arrPlayer[m_iEnemy].DeletePiece(m_arrPlayer[m_iPlayer].GetRectArr()[EnemyIndex]);	
 			m_iTurn++;
 			m_bSelectState = false;			
-		}
-		
+		}	
 	}
+		
 }
 
+bool GameManager::GameCheck(HWND hWnd)
+{
+	//남아있는 말들 개수 체크
+	if (m_arrPlayer[m_iEnemy].PieceCheck() == true)
+	{
+		if (MessageBox(hWnd, L"다시 하시겠습니까?", L"승리!!!", MB_OKCANCEL) == IDOK)
+			return true;
+		else
+			SendMessage(hWnd, WM_DESTROY, 0, 0);
+	}
+	//킹 체크메이트확인
+	if (m_arrPlayer[m_iPlayer].KingCheck(m_arrPlayer[m_iEnemy].GetRectArr()[m_iKingIndex]) == true)
+	{
+		if (MessageBox(hWnd, L"체크메이트 계속 하시겠습니까?", L"체크메이트", MB_OKCANCEL) == IDOK)
+			return false;
+		else
+			return true;
+	}
+	return false;
+}
 GameManager::~GameManager()
 {
 }

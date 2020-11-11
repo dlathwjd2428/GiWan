@@ -51,6 +51,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		pt.x = LOWORD(lParam);
 		pt.y = HIWORD(lParam);
 		s_GameManager.ClicK(pt);
+		if (s_GameManager.GameCheck(hWnd) == true)
+			s_GameManager.LoadingGame(hWnd);
 		InvalidateRect(hWnd, NULL, true);
 		return 0;
 	case WM_PAINT:

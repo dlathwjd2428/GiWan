@@ -6,7 +6,8 @@
 #define Y 8
 #define PIECE_MAX 16
 #define NONE -1
-#define FALSE -2
+#define WHITE_KING 11
+#define BLACK_KING 12
 struct RESOURCE
 {
 	int m_iIndex;

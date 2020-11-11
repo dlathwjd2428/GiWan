@@ -119,27 +119,19 @@ bool Player::Click(POINT pt)
 			}
 		}
 	}
-	
 	return m_bClickState;
 }
 
 int Player::Move(POINT pt)
 {
-	int MoveCheck = FALSE;
-	MoveCheck = m_arrPiece[m_iSelectIndex]->Move(pt);
-	if (MoveCheck != FALSE)
+	if (m_arrPiece[m_iSelectIndex]->Move(pt) != false)
+	{
 		m_bClickState = false;
-	//for (int i = 0; i < PIECE_MAX; i++)
-	//{
-		//MoveCheck = m_arrPiece[i]->Move(pt);
-		//if (MoveCheck != FALSE)
-		//{
-			//m_bClickState = false;
-			//break;			
-		//}
-	//}
-	return MoveCheck;
+		return m_iSelectIndex;
+	}
+	return NONE;
 }
+
 void Player::UpdatePlayer(RECT* Enemy)
 {
 	//말들rect값 성정
@@ -162,6 +154,34 @@ void Player::DeletePiece(RECT rect)
 	}
 }
 
+bool Player::KingCheck(RECT KingRect)
+{
+	for (int i = 0; i < PIECE_MAX; i++)
+	{
+		if (m_arrPiece[i]->KingCheck(KingRect) == true)
+			return true;
+	}
+	return false;
+}
+
+bool Player::PieceCheck()
+{
+	for (int i = 0; i < PIECE_MAX; i++)
+	{
+		if (m_arrPiece[i]->PieceCheck() == false)
+			return false;
+	}
+	return true;
+}
+
+void Player::PawnTest()
+{
+	for (int i = 0; i < 8; i++)
+		m_arrPiece[i]->PawnChange();
+}
+
 Player::~Player()
 {
+	for (int i = 0; i < PIECE_MAX; i++)
+		delete m_arrPiece[i];
 }
