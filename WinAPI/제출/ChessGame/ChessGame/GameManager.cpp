@@ -105,8 +105,6 @@ bool GameManager::GameCheck(HWND hWnd)
 {
 	//true: 게임재시작, false: 게임그대로진행
 	UpdateGame();
-	//폰체크
-	m_arrPlayer[m_iEnemy].PawnCheck(hWnd);
 	//킹 체크메이트확인
 	if (m_arrPlayer[m_iEnemy].KingCheck(m_arrPlayer[m_iPlayer].GetRectArr()[m_iKingIndex]) == true)
 	{
@@ -126,6 +124,8 @@ bool GameManager::GameCheck(HWND hWnd)
 		else
 			return true;
 	}
+	//폰체크
+	m_arrPlayer[m_iEnemy].PawnCheck(hWnd);
 	return false;
 }
 
