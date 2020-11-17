@@ -122,12 +122,7 @@ void Character::Jump(int Count)
 			m_bJumpState = false;
 	}
 }
-RECT Character::GetRect()
-{
-	RECT tmp;
-	tmp = { m_CharPt.x, m_CharPt.y, m_CharPt.x + IMAGE_X, m_CharPt.y + IMAGE_Y };
-	return tmp;
-}
+
 Character::~Character()
 {
 }

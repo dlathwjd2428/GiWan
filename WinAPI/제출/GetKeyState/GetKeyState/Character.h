@@ -22,7 +22,6 @@ public:
 	inline bool GetMoveState() { return m_bMoveState; }
 	inline void SetMoveState(bool State) { m_bMoveState = State; }
 	inline bool GetJumpState() { return m_bJumpState; }
-	RECT GetRect();
 	Character();
 	~Character();
 };
