@@ -63,7 +63,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 				s_Char.Move(UP);
 			if (GetKeyState(VK_DOWN) & 0x8000)
 				s_Char.Move(DOWN);
-			if (GetKeyState(VK_RETURN) & 0x8000)
+			if (GetKeyState(VK_RETURN) & 0x8000 && s_Char.GetJumpState() == false)
 			{
 				if (s_Char.GetDirection() == LEFT || s_Char.GetDirection() == RIGHT)
 					SetTimer(hWnd, 2, 70, NULL);
