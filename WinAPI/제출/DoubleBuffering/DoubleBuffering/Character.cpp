@@ -11,7 +11,7 @@ void Character::SetDefault(HDC hdc)
 	m_Image.SetImage(hdc, TEXT("image.bmp"), FRONT);
 	m_iDirection = NONE;
 	m_bJumpState = false;
-	m_iJumpY = 30;
+	m_iJumpY = JUMP;
 }
 
 void Character::Draw(HDC hdc)
@@ -56,27 +56,18 @@ bool Character::Jump()
 		m_SavePt = m_CharPt;
 		m_bJumpState = true;
 	}
-	switch (m_iDirection)
+	else
 	{
-	case LEFT:		
 		m_CharPt.y -= m_iJumpY;
 		m_iJumpY -= GRAVITY;
-		break;
-	case RIGHT:
-		m_CharPt.y -= m_iJumpY;
-		m_iJumpY -= GRAVITY;
-		break;
-	case UP:
-		break;
-	case DOWN:
-		break;
+		if (m_SavePt.y <= m_CharPt.y)
+		{
+			m_bJumpState = false;
+			m_iJumpY = JUMP;
+			return false;
+		}
 	}
-	if (m_SavePt.y <= m_CharPt.y)
-	{
-		m_bJumpState = false;
-		m_iJumpY = 30;
-		return false;
-	}
+	return true;
 }
 
 Character::~Character()

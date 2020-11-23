@@ -24,7 +24,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	RegisterClass(&WndClass);
 
-	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, (HMENU)NULL, hInstance, NULL);
+	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
 	while (GetMessage(&Message, NULL, 0, 0))
@@ -64,7 +64,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			if (GetKeyState(VK_DOWN) & 0x8000)
 				s_Char.Move(DOWN);
 			if (GetKeyState(VK_RETURN) & 0x8000)
-				SetTimer(hWnd, 2, 50, NULL);
+			{
+				if (s_Char.GetDirection() == LEFT || s_Char.GetDirection() == RIGHT)
+					SetTimer(hWnd, 2, 70, NULL);
+			}
 		}
 		else
 			if (s_Char.Jump() == false)

@@ -6,6 +6,7 @@
 #define DOWN 0
 #define NONE -1
 #define GRAVITY 10
+#define JUMP 40
 class Character
 {
 private:
@@ -21,6 +22,7 @@ public:
 	void Draw(HDC hdc);
 	void Move(int Direction);
 	bool Jump();
+	inline int GetDirection() { return m_iDirection; }
 	inline bool GetJumpState() { return m_bJumpState; }
 	inline void SetJumpState(bool State) { m_bJumpState = State; }
 	Character();
