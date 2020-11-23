@@ -21,4 +21,7 @@ void BitMap::Draw(HDC hdc, POINT CharPt, POINT ImagePt)
 
 BitMap::~BitMap()
 {
+	DeleteObject(m_Image);
+	SelectObject(m_hMemDC, m_OldImage);
+	DeleteDC(m_hMemDC);
 }
