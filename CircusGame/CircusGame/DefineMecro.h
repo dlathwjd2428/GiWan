@@ -1,5 +1,11 @@
 #pragma once
-
+#define NORMAL 0
+#define BACK 1
+#define WIN_SIZE_X 1024
+#define WIN_SIZE_Y 768
+#define LEFT 1
+#define RIGHT 2
+#define JUMP 50
 enum IMAGE
 {
 	IMAGE_START,
@@ -32,4 +38,11 @@ enum IMAGE
 	IMAGE_PLAYER_WIN,
 	IMAGE_PLAYER_WIN2,
 	IMAGE_MAX
+};
+
+struct MyIMG
+{
+	int m_iIndex;
+	SIZE m_iSize;
+	POINT m_iDrawPt;
 };
