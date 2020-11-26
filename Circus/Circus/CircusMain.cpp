@@ -28,6 +28,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIN_X, WIN_Y, NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
+	srand((unsigned)time(NULL));
+
 	while (true)
 	{
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
@@ -58,14 +60,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		s_Bit.Init(hdc, L"", BACK);
 		s_GManager.LoadingGame(hdc);
 		ReleaseDC(hWnd, hdc);
-		SetTimer(hWnd, 1, 40, NULL);
+		SetTimer(hWnd, 1, 60, NULL);
 		return 0;
 	case WM_TIMER:
 		if (wParam == 1)
 		{
 			s_GManager.Move(newTimer);
 			if (newTimer == true)
-				SetTimer(hWnd, 2, 40, NULL);
+				SetTimer(hWnd, 2, 60, NULL);
 		}
 		else
 		{
@@ -78,7 +80,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		s_GManager.Draw(s_Bit.GetMemDC());
-		BitBlt(hdc, 0, 0, WIN_X, WIN_Y, s_Bit.GetMemDC(), 0, 0, SRCCOPY);
+		BitBlt(hdc, 0, 0, WIN_X, WIN_Y, s_Bit.GetMemDC(), 0, 0, SRCCOPY);;
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:

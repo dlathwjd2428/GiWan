@@ -10,6 +10,8 @@
 #define JUMP 50
 #define GRAVITY -10
 #define RING_MAX 3
+#define FIRE_MAX 10
+#define MITER_MAX 10
 enum IMAGE
 {
 	IMAGE_START,

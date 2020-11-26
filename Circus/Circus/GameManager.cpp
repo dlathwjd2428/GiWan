@@ -17,7 +17,7 @@ void GameManager::UpdateGame(HWND hWnd)
 {
 	if (clock() > m_iClock)
 	{
-		m_Obstacle.Move(NULL);
+		m_Obstacle.MoveRing(NULL);
 		SendMessage(hWnd, WM_PAINT, 0, 0);
 		m_iClock = clock() + 50;
 	}
@@ -34,18 +34,18 @@ void GameManager::Move(bool &Timer)
 {
 	if (GetKeyState(VK_RETURN) & 0x8000)
 		Timer = true;
-	m_Obstacle.SetRingSpeed(NULL);
+	m_Obstacle.Move(NULL);
 	if (GetKeyState(VK_LEFT) & 0x8000)
 	{
 		m_Char.CharMove(LEFT);
 		m_Map.MapMove(LEFT);
-		m_Obstacle.SetRingSpeed(LEFT);
+		m_Obstacle.Move(LEFT);
 	}
 	if (GetKeyState(VK_RIGHT) & 0x8000)
 	{
 		m_Char.CharMove(RIGHT);
 		m_Map.MapMove(RIGHT);
-		m_Obstacle.SetRingSpeed(RIGHT);
+		m_Obstacle.Move(RIGHT);
 	}
 }
 

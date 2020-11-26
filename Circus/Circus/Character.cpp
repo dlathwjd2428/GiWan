@@ -7,7 +7,7 @@ Character::Character()
 void Character::SetChar()
 {
 	m_Char.m_iIndex = IMAGE_PLAYER;
-	m_Char.m_iPoint = { 150, WIN_Y - 150 };
+	m_Char.m_iPoint = { 150, WIN_Y - 200 };
 	m_Char.m_iSize = { 100, 100 };
 	m_iJumpPower = JUMP;
 	m_bJumpState = false;
