@@ -28,7 +28,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIN_X, WIN_Y, NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
-	HDC hdc = GetDC(hWnd);
 	while (true)
 	{
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
@@ -40,9 +39,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervlnstance, LPSTR lpszCmd
 		}
 		else
 		{
+			s_GManager.UpdateGame(hWnd);
 		}
 	}
-	ReleaseDC(hWnd, hdc);
 	return (int)Message.wParam;
 }
 
@@ -51,6 +50,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	static BitMap s_Bit;
 	HDC hdc;
 	PAINTSTRUCT ps;
+	static bool newTimer = false;
 	switch (iMessage)
 	{
 	case WM_CREATE:		
@@ -58,10 +58,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		s_Bit.Init(hdc, L"", BACK);
 		s_GManager.LoadingGame(hdc);
 		ReleaseDC(hWnd, hdc);
-		SetTimer(hWnd, 1, 50, NULL);
+		SetTimer(hWnd, 1, 40, NULL);
 		return 0;
 	case WM_TIMER:
-		s_GManager.Move();
+		if (wParam == 1)
+		{
+			s_GManager.Move(newTimer);
+			if (newTimer == true)
+				SetTimer(hWnd, 2, 40, NULL);
+		}
+		else
+		{
+			s_GManager.Jump(newTimer);
+			if (newTimer == false)
+				KillTimer(hWnd, 2);
+		}
+		InvalidateRect(hWnd, NULL, false);
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
@@ -70,6 +82,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
+		KillTimer(hWnd, 1);
+		delete BitMapManager::GetInstance();
 		PostQuitMessage(0);
 		return 0;
 	}

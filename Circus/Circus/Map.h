@@ -10,6 +10,7 @@ private:
 public:
 	void SetMap(HDC hdc);
 	void DrawMap(HDC hdc);
+	void MapMove(int Direction);
 	Map();
 	~Map();
 };

@@ -1,11 +1,15 @@
 #pragma once
 #include<windows.h>
+#include<time.h>
 #define NORMAL 0
 #define BACK 1
 #define WIN_X 1024
 #define WIN_Y 768
 #define LEFT 1
 #define RIGHT 2
+#define JUMP 50
+#define GRAVITY -10
+#define RING_MAX 3
 enum IMAGE
 {
 	IMAGE_START,
