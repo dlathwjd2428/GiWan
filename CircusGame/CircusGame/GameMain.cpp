@@ -3,6 +3,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = TEXT("CircusGame");
 
+GameManager s_GManager;
+
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
 	HWND hWnd;
@@ -26,10 +28,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPervInstance, LPSTR lpszCmd
 		, WIN_X, WIN_Y, NULL, (HMENU)NULL, hInstance, NULL);
 	ShowWindow(hWnd, nCmdShow);
 
-	while (GetMessage(&Message, NULL, 0, 0))
+	while (true)
 	{
-		TranslateMessage(&Message);
-		DispatchMessage(&Message);
+		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
+		{
+			if (Message.message == WM_QUIT)
+				break;
+			TranslateMessage(&Message);
+			DispatchMessage(&Message);
+		}
+		else
+		{
+			s_GManager.UpdateGame(hWnd);
+		}
 	}
 	return (int)Message.wParam;
 }
@@ -39,7 +50,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	HDC hdc;
 	PAINTSTRUCT ps;
 	static BitMap s_Bit;
-	static GameManager s_GManager;
+	static bool Timer = false;
 	switch (iMessage)
 	{
 	case WM_CREATE:
@@ -47,7 +58,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		s_Bit.Init(hdc, L"", BACK);
 		s_GManager.SetGame(hdc);
 		ReleaseDC(hWnd, hdc);
-		SetTimer(hWnd, 1, 50, NULL);
+		SetTimer(hWnd, 1, 60, NULL);
 		return 0;
 	case WM_TIMER:
 		s_GManager.Move();

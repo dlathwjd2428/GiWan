@@ -1,11 +1,13 @@
 #pragma once
 #include<windows.h>
 #include<time.h>
+#include<vector>
 #pragma comment(lib, "msimg32.lib")
 #define NORMAL 0
 #define BACK 1
 #define LEFT 0
 #define RIGHT 1
+#define NONE 2
 #define WIN_X 1024
 #define WIN_Y 768
 #define GALLERY_X 2300
@@ -15,6 +17,13 @@
 #define POINT_Y WIN_Y - 200
 #define DEFAULT_SIZE 100
 #define FIRE_MAX 10
+#define RING_MAX 10
+#define CREATE_SPEED 50
+#define DEFAULT_SPEED 10
+#define BACK_SPEED -5
+#define FRONT_SPEED 20
+#define JUMP 50
+#define GRAVITY -10
 enum IMAGE
 {
 	IMAGE_START,
