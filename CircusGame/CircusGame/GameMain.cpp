@@ -56,13 +56,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		s_Bit.Init(hdc, L"", BACK);
-		s_GManager.SetGame(hdc);
-		ReleaseDC(hWnd, hdc);
-		SetTimer(hWnd, 1, 60, NULL);
+		s_GManager.SetGame(hWnd);
+		ReleaseDC(hWnd, hdc);	
+		return 0;
+	case WM_KEYDOWN:
+		if (Timer == false)
+		{
+			SetTimer(hWnd, 1, 80, NULL);
+			Timer = true;
+		}
+		return 0;
+	case WM_KEYUP:
+		if (wParam != VK_RETURN)
+		{
+			if (s_GManager.GetJump() == false)
+				KillTimer(hWnd, 1);
+			Timer = false;
+			s_GManager.SetMessageState();
+		}
 		return 0;
 	case WM_TIMER:
-		s_GManager.Move();
-		InvalidateRect(hWnd, NULL, false);
+		if (s_GManager.GetGameState() == true)
+		{
+			s_GManager.Move();
+			InvalidateRect(hWnd, NULL, false);
+			s_GManager.CollideCheck(hWnd);
+		}
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);

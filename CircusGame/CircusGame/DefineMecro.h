@@ -24,6 +24,9 @@
 #define FRONT_SPEED 20
 #define JUMP 50
 #define GRAVITY -10
+#define MITER_MAX 10
+#define WIN 0
+#define DIE 1
 enum IMAGE
 {
 	IMAGE_START,
@@ -59,4 +62,6 @@ struct MyIMG
 	int m_iIndex;
 	POINT m_Point;
 	SIZE m_Size;
+	RECT m_Rect;
+	RECT m_Rect2;
 };
