@@ -1,0 +1,67 @@
+#pragma once
+#include<windows.h>
+#include<time.h>
+#include<vector>
+#pragma comment(lib, "msimg32.lib")
+#define NORMAL 0
+#define BACK 1
+#define LEFT 0
+#define RIGHT 1
+#define NONE 2
+#define WIN_X 1024
+#define WIN_Y 768
+#define GALLERY_X 2300
+#define GALLERY_Y 100
+#define GALLERY_MAX 23
+#define POINT_X 100
+#define POINT_Y WIN_Y - 200
+#define DEFAULT_SIZE 100
+#define FIRE_MAX 10
+#define RING_MAX 10
+#define CREATE_SPEED 50
+#define DEFAULT_SPEED 10
+#define BACK_SPEED -5
+#define FRONT_SPEED 20
+#define JUMP 50
+#define GRAVITY -10
+#define MITER_MAX 10
+#define WIN 0
+#define DIE 1
+enum IMAGE
+{
+	IMAGE_START,
+	IMAGE_LANE = 0,
+	IMAGE_DECO,
+	IMAGE_PEOPLE1,
+	IMAGE_PEOPLE2,
+	IMAGE_MONEY,
+	IMAGE_WIN1,
+	IMAGE_WIN2,
+	IMAGE_WIN3,
+	IMAGE_GOAL,
+	IMAGE_ENEMY1,
+	IMAGE_ENEMY1_LEFT,
+	IMAGE_ENEMY1_RIGHT,
+	IMAGE_ENEMY2,
+	IMAGE_ENEMY2_LEFT,
+	IMAGE_ENEMY2_RIGHT,
+	IMAGE_ENEMY3,
+	IMAGE_ENEMY3_LEFT,
+	IMAGE_ENEMY3_RIGHT,
+	IMAGE_FIRE1,
+	IMAGE_FRIE2,
+	IMAGE_MITER,
+	IMAGE_CHARACTER1,
+	IMAGE_CHARACTER2,
+	IMAGE_CHARACTER_JUMP,
+	IMAGE_MAX
+};
+
+struct MyIMG
+{
+	int m_iIndex;
+	POINT m_Point;
+	SIZE m_Size;
+	RECT m_Rect;
+	RECT m_Rect2;
+};
