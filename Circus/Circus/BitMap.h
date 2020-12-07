@@ -1,5 +1,6 @@
 #pragma once
 #include"DefineMecro.h"
+#include"TextAndFont.h"
 
 class BitMap
 {

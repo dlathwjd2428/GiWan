@@ -24,18 +24,20 @@ int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hPreInst, LPSTR lpszCmdParam, in
 
 	hWnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WIN_SIZE, WIN_SIZE, NULL, (HMENU)0, g_hInst, 0);
 	ShowWindow(hWnd, nCmdShow);
-
 	while (true)
 	{
+		
 		if (PeekMessage(&Message, NULL, 0, 0, PM_REMOVE))
 		{
 			if (Message.message == WM_QUIT)
 				break;
+			
 			TranslateMessage(&Message);
 			DispatchMessage(&Message);
 		}
 		else
 		{
+			s_GManager.UpdateGame();
 		}
 	}
 	return(int)Message.wParam;
@@ -51,8 +53,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		s_Bit.Init(hdc, L"", BACK);
-		s_GManager.SetGame(hdc);
+		s_GManager.SetGame(hdc);	
+		SetTimer(hWnd, 1, 50, NULL);
 		ReleaseDC(hWnd, hdc);
+		return 0;
+	case WM_TIMER:
+		s_GManager.Move();
+		InvalidateRect(hWnd, NULL, false);
 		return 0;
 	case WM_PAINT:	
 		hdc = BeginPaint(hWnd, &ps);

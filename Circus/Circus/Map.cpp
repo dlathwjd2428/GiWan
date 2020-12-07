@@ -15,12 +15,14 @@ void Map::SetMap(HDC hdc)
 	for (int i = 0; i < MITER_MAX; i++)
 	{
 		m_arrMiter[i].m_iIndex = IMAGE_MITER;
-		m_arrMiter[i].m_Point = { x, CHAR_PT_Y + 110 };
+		m_arrMiter[i].m_Point = { x, CHAR_PT_Y + 160 };
 		m_arrMiter[i].m_Size = { 100, IMAGE_SIZE / 2 };
 		x += WIN_SIZE;
 	}
 	//관중석설정
-	m_GalleryInfo.m_Point = { -500, WIN_SIZE / 2 - 100 };
+	m_bCheer = false;
+	m_iCount = 0;
+	m_GalleryInfo.m_Point = { -1000, WIN_SIZE / 2 - 100 };
 	m_GalleryInfo.m_Size = { 3000, 100 };
 	m_Gallery.Init(hdc, L"", BACK, 3000, 100);
 	POINT tmpPoint = { 0, 0 };
@@ -38,22 +40,74 @@ void Map::SetMap(HDC hdc)
 void Map::DrawMap(HDC hdc)
 {
 	//관중석그리기
-	m_Gallery.Draw(hdc, m_GalleryInfo.m_Point, m_GalleryInfo.m_Size);
+	if (m_bCheer == false)
+		m_GalleryInfo.m_iIndex = IMAGE_GALLERY1;
+	else
+	{
+		if (m_GalleryInfo.m_iIndex == IMAGE_GALLERY1)
+			m_GalleryInfo.m_iIndex++;
+		else
+			m_GalleryInfo.m_iIndex--;
+		m_iCount++;
+	/*	if (m_iCount == 4)
+		{
+			m_iCount = 0;
+			m_bCheer = false;
+		}*/
+	}
+		m_Gallery.Draw(hdc, m_GalleryInfo.m_Point, m_GalleryInfo.m_Size);
 	//레인그리기
 	BitManager::GetInstance()->Draw(hdc, m_Lane.m_iIndex, m_Lane.m_Point, m_Lane.m_Size);
 	//미터표시그리기
+	TextAndFont::GetInstance()->FontSize(hdc, 30);
+	TextAndFont::GetInstance()->ColorSet(hdc, BACK_COLOR, 0, 0, 0);
+	TextAndFont::GetInstance()->ColorSet(hdc, TEXT_COLOR, 255, 94, 0);
 	WCHAR buf[256];
 	for (int i = 0; i < MITER_MAX; i++)
 	{
 		wsprintf(buf, L"%d", 100 - 10 * i);
 		BitManager::GetInstance()->Draw(hdc, m_arrMiter[i].m_iIndex, m_arrMiter[i].m_Point, m_arrMiter[i].m_Size);
-		TextOut(hdc, m_arrMiter[i].m_Point.x + 30, m_arrMiter[i].m_Point.y + 15, buf, lstrlen(buf));
+		TextOut(hdc, m_arrMiter[i].m_Point.x + 15, m_arrMiter[i].m_Point.y + 10, buf, lstrlen(buf));
 	}
+	//점수판그리기
+	TextAndFont::GetInstance()->ColorSet(hdc, BRUSH_COLOR, 255, 193, 158);
+	Rectangle(hdc, 100, 100, 900, WIN_SIZE / 2 - 200);
+	TextAndFont::GetInstance()->Reset(hdc);
 }
 
-void Map::Move()
+void Map::Move(int Direction)
 {
-  
+	int Add = NULL;
+	if (m_GalleryInfo.m_Point.x <= -1600)
+		m_GalleryInfo.m_Point.x = -500;
+	else if (m_GalleryInfo.m_Point.x >= -500)
+		m_GalleryInfo.m_Point.x = -1600;
+	switch (Direction)
+	{
+	case LEFT:
+		Add = 15;
+		break;
+	case RIGHT:
+		Add = -15;
+		break;
+	}
+	m_GalleryInfo.m_Point.x += Add;
+	MoveMiter(Add);
+}
+
+void Map::MoveMiter(int Add)
+{
+	for (int i = 0; i < MITER_MAX; i++)
+		m_arrMiter[i].m_Point.x += Add;
+}
+
+void Map::JumpMove(bool MoveState)
+{
+	int Add = 0;
+	if (MoveState == true)
+		Add = -15;
+	m_GalleryInfo.m_Point.x += Add;
+	MoveMiter(Add);
 }
 
 Map::~Map()
