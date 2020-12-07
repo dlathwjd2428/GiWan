@@ -12,14 +12,19 @@
 #define LEFT 1
 #define RIGHT 2
 #define JUMP 40
-#define OB_MAX 10
+#define FIRE_MAX 10
+#define RING_MAX 15
 #define TEXT_COLOR 0
 #define BACK_COLOR 1
 #define BRUSH_COLOR 2
 #define GRAVITY -5
 #define NORMAL_SPEED 10
-#define HIGH_SPEED 17
-#define LOW_SPEED 5
+#define HIGH_SPEED 25
+#define LOW_SPEED -5
+#define WIN 100
+#define DIE 101
+#define FIRE_SCORE 1000
+#define RING_SCORE 2000
 enum IMAGE
 {
 	IMAGE_START,

@@ -11,9 +11,10 @@ private:
 	int m_iJumpPower;
 public:
 	void SetChar();
-	void Draw(HDC hdc);
+	void Draw(HDC hdc, int Option = NORMAL);
 	void MoveChar(int Direction);
 	bool Jump();
+	inline RECT GetCharRect() { return m_Char.m_Rect1; }
 	inline bool GetMoveState() { return m_bMoveState; }
 	inline bool GetJumpState() { return m_bJumpState; }
 	Character();

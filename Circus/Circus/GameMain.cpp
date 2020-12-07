@@ -53,12 +53,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		hdc = GetDC(hWnd);
 		s_Bit.Init(hdc, L"", BACK);
-		s_GManager.SetGame(hdc);	
+		s_GManager.SetGame(hWnd);	
 		SetTimer(hWnd, 1, 50, NULL);
 		ReleaseDC(hWnd, hdc);
 		return 0;
 	case WM_TIMER:
-		s_GManager.Move();
+		if (s_GManager.GetGameState() == NORMAL)
+		{
+			s_GManager.Move();
+			s_GManager.CollideCheck(hWnd);
+		}
 		InvalidateRect(hWnd, NULL, false);
 		return 0;
 	case WM_PAINT:	
@@ -68,6 +72,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_DESTROY:
+		delete BitManager::GetInstance();
+		delete TextAndFont::GetInstance();
+		KillTimer(hWnd, 1);
 		PostQuitMessage(0);
 		return 0;
 	}

@@ -4,8 +4,9 @@ GameManager::GameManager()
 {
 }
 
-void GameManager::SetGame(HDC hdc)
+void GameManager::SetGame(HWND hWnd)
 {
+	HDC hdc = GetDC(hWnd);
 	m_iScore = 0;
 	BitManager::GetInstance()->Init(hdc);
 	m_Char.SetChar();
@@ -13,6 +14,8 @@ void GameManager::SetGame(HDC hdc)
 	m_Obstacle.SetObstacle();
 	m_iClock = clock();
 	m_bMessageState = true;
+	m_iGameState = NORMAL;
+	ReleaseDC(hWnd, hdc);
 }
 
 void GameManager::UpdateGame()
@@ -31,7 +34,7 @@ void GameManager::Draw(HDC hdc)
 {
 	m_Map.DrawMap(hdc);
 	m_Obstacle.Draw(hdc);
-	m_Char.Draw(hdc);
+	m_Char.Draw(hdc, m_iGameState);
 	if (m_Char.GetJumpState() == true)
 		m_Obstacle.RightDraw(hdc);
 	//점수판표기
@@ -45,14 +48,13 @@ void GameManager::Draw(HDC hdc)
 
 void GameManager::Move()
 {
-	int Direction = NULL;
 	if (m_Char.GetJumpState() == false)
-	{
-		
+	{		
+		int Direction = NULL;
 		if (GetKeyState(VK_LEFT) & 0x8000)
 		{
-			m_Obstacle.SetRingSpeed(LOW_SPEED);
 			Direction = LEFT;
+			m_Obstacle.SetRingSpeed(LOW_SPEED);
 		}
 		if (GetKeyState(VK_RIGHT) & 0x8000)
 		{
@@ -60,7 +62,9 @@ void GameManager::Move()
 			m_Obstacle.SetRingSpeed(HIGH_SPEED);
 		}
 		if (GetKeyState(VK_RETURN) & 0x8000)
+		{
 			Direction = JUMP;
+		}
 		m_Map.Move(Direction);
 		m_Obstacle.Move(Direction);	
 		m_Char.MoveChar(Direction);	
@@ -72,8 +76,7 @@ void GameManager::Move()
 		m_Map.JumpMove(m_Char.GetMoveState());
 		m_Obstacle.JumpMove(m_Char.GetMoveState());
 	}
-
-	if (Direction == NULL)
+	if (m_Char.GetMoveState() == false)
 	{
 		m_Obstacle.SetRingSpeed(NORMAL_SPEED);
 		m_bMessageState = true;
@@ -81,10 +84,31 @@ void GameManager::Move()
 	else
 	{
 		m_bMessageState = false;
-		//m_Obstacle.SetRingSpeed(HIGH_SPEED);
 		m_Obstacle.UpdateRing();
+	}	
+}
+
+void GameManager::CollideCheck(HWND hWnd)
+{
+	int iResult;
+	iResult = m_Obstacle.CollideCheck(m_Char.GetCharRect());
+	switch (iResult)
+	{
+	case DIE:
+		m_iGameState = DIE;
+		if (MessageBox(hWnd, TEXT("사망..다시 하시겠습니까??"), TEXT("사망.."), MB_OKCANCEL) == IDOK)
+			SetGame(hWnd);
+		else
+			SendMessage(hWnd, WM_DESTROY, 0, 0);
+		break;
+	case WIN:
+		m_iGameState = WIN;
+		break;
+	case FIRE_SCORE:
+	case RING_SCORE:
+		m_iScore += iResult;
+		break;
 	}
-	
 }
 
 GameManager::~GameManager()
