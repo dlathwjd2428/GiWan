@@ -9,7 +9,7 @@ void Character::SetChar()
 	m_Char.m_iIndex = IMAGE_CHAR1;
 	m_Char.m_Point = { CHAR_PT_X, CHAR_PT_Y };
 	m_Char.m_Size = { IMAGE_SIZE + 20, IMAGE_SIZE + 20};
-	m_Char.m_Rect1 = { m_Char.m_Point.x, m_Char.m_Point.y, m_Char.m_Point.x + m_Char.m_Size.cx, m_Char.m_Point.y + m_Char.m_Size.cy };
+	m_Char.m_Rect1 = { m_Char.m_Point.x + 10, m_Char.m_Point.y + 10, m_Char.m_Point.x + m_Char.m_Size.cx - 10, m_Char.m_Point.y + m_Char.m_Size.cy - 10 };
 	m_bMoveState = false;
 	m_bJumpState = false;
 	m_iJumpPower = JUMP;
@@ -67,6 +67,7 @@ void Character::MoveChar(int Direction)
 bool Character::Jump()
 {
 	m_Char.m_Point.y -= m_iJumpPower;
+	m_Char.m_Rect1 = { m_Char.m_Point.x + 10, m_Char.m_Point.y + 10, m_Char.m_Point.x + m_Char.m_Size.cx - 10, m_Char.m_Point.y + m_Char.m_Size.cy - 10 };
 	m_iJumpPower += GRAVITY;
 	if (m_Save.y <= m_Char.m_Point.y)
 	{

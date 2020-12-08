@@ -38,7 +38,7 @@ void Obstacle::SetObstacle()
 		m_arrRing[i].m_iIndex = IMAGE_ENEMY1;
 		m_arrRing[i].m_Size = { IMAGE_SIZE, 270 };
 		m_arrRing[i].m_Point = { RPoint, WIN_SIZE / 2 };
-		m_arrRing[i].m_Rect1 = { m_arrRing[i].m_Point.x, m_arrRing[i].m_Point.y + 250, m_arrRing[i].m_Point.x + IMAGE_SIZE, m_arrRing[i].m_Point.y + 270 };
+		m_arrRing[i].m_Rect1 = { m_arrRing[i].m_Point.x + 10, m_arrRing[i].m_Point.y + 250, m_arrRing[i].m_Point.x + IMAGE_SIZE - 10, m_arrRing[i].m_Point.y + 270 };
 		m_arrRing[i].m_Rect2 = { m_arrRing[i].m_Point.x, m_arrRing[i].m_Point.y, m_arrRing[i].m_Point.x + IMAGE_SIZE, m_arrRing[i].m_Point.y + 250 };
 		//중복또는 불가능 위치 생성 제어
 		if (i != 0)
@@ -55,8 +55,8 @@ void Obstacle::SetObstacle()
 	}
 	//골인지점설정
 	m_Goal.m_iIndex = IMAGE_GOAL;
-	m_Goal.m_Point = { WIN_SIZE * 10, CHAR_PT_Y + 100 };
-	m_Goal.m_Rect1 = { m_Goal.m_Point.x, m_Goal.m_Point.y - 50, m_Goal.m_Point.x + m_Goal.m_Point.y };
+	m_Goal.m_Point = { WIN_SIZE * 1, CHAR_PT_Y + 100 };
+	m_Goal.m_Rect1 = { m_Goal.m_Point.x , m_Goal.m_Point.y - 100, m_Goal.m_Point.x + m_Goal.m_Size.cx, m_Goal.m_Point.y + m_Goal.m_Size.cy };
 	m_Goal.m_Size = { IMAGE_SIZE * 2, IMAGE_SIZE / 2 };
 }
 
@@ -65,7 +65,7 @@ void Obstacle::UpdateRing()
 	for (int i = 0; i < RING_MAX; i++)
 	{
 		m_arrRing[i].m_Point.x -= m_iRingSpeed;
-		m_arrRing[i].m_Rect1 = { m_arrRing[i].m_Point.x, m_arrRing[i].m_Point.y + 250, m_arrRing[i].m_Point.x + IMAGE_SIZE, m_arrRing[i].m_Point.y + 270 };
+		m_arrRing[i].m_Rect1 = { m_arrRing[i].m_Point.x + 10, m_arrRing[i].m_Point.y + 250, m_arrRing[i].m_Point.x + IMAGE_SIZE - 10, m_arrRing[i].m_Point.y + 270 };
 		if (m_arrRing[i].m_Rect2.bottom != 10)
 			m_arrRing[i].m_Rect2 = { m_arrRing[i].m_Point.x, m_arrRing[i].m_Point.y, m_arrRing[i].m_Point.x + IMAGE_SIZE, m_arrRing[i].m_Point.y + 250 };
 	}
@@ -122,12 +122,12 @@ void Obstacle::Move(int Direction)
 		Add = 15;
 		break;
 	case RIGHT:
-		Add = -15;		
+		Add = -20;		
 		break;
 	}
 	MoveFire(Add);
 	m_Goal.m_Point.x += Add;
-	m_Goal.m_Rect1 = { m_Goal.m_Point.x, m_Goal.m_Point.y - 50, m_Goal.m_Point.x + m_Goal.m_Point.y };
+	m_Goal.m_Rect1 = { m_Goal.m_Point.x , m_Goal.m_Point.y - 100, m_Goal.m_Point.x + m_Goal.m_Size.cx, m_Goal.m_Point.y + m_Goal.m_Size.cy };
 }
 
 void Obstacle::MoveFire(int Add)
@@ -146,12 +146,13 @@ void Obstacle::JumpMove(bool MoveState)
 	int Add = 0;
 	if (MoveState == true)
 	{
-		Add = -15;
+		Add = -20;
 		m_iRingSpeed = HIGH_SPEED;
 	}
 	else
 		m_iRingSpeed = NORMAL_SPEED;
-	m_Goal.m_Point.x += Add;;
+	m_Goal.m_Point.x += Add;
+	m_Goal.m_Rect1 = { m_Goal.m_Point.x , m_Goal.m_Point.y - 100, m_Goal.m_Point.x + m_Goal.m_Size.cx, m_Goal.m_Point.y + m_Goal.m_Size.cy };
 	MoveFire(Add);
 }
 
@@ -179,7 +180,7 @@ int Obstacle::CollideCheck(RECT CharRect)
 		if (IntersectRect(&tmpRect, &m_arrFire[i].m_Rect2, &CharRect) == true)
 		{
 			Score += FIRE_SCORE;
-			m_arrFire[i].m_Rect2 = { 0, 0, 0, 0 };
+			m_arrFire[i].m_Rect2 = { 0, 0, 10, 10 };
 		}
 	}
 	//링

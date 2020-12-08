@@ -103,6 +103,10 @@ void GameManager::CollideCheck(HWND hWnd)
 		break;
 	case WIN:
 		m_iGameState = WIN;
+		if (MessageBox(hWnd, TEXT("승리!!다시 하시겠습니까??"), TEXT("승리!!"), MB_OKCANCEL) == IDOK)
+			SetGame(hWnd);
+		else
+			SendMessage(hWnd, WM_DESTROY, 0, 0);
 		break;
 	case FIRE_SCORE:
 	case RING_SCORE:

@@ -88,7 +88,7 @@ void Map::Move(int Direction)
 		Add = 15;
 		break;
 	case RIGHT:
-		Add = -15;
+		Add = -20;
 		break;
 	}
 	m_GalleryInfo.m_Point.x += Add;
@@ -105,7 +105,7 @@ void Map::JumpMove(bool MoveState)
 {
 	int Add = 0;
 	if (MoveState == true)
-		Add = -15;
+		Add = -20;
 	m_GalleryInfo.m_Point.x += Add;
 	MoveMiter(Add);
 }
