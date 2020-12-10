@@ -1,6 +1,13 @@
 #pragma once
+#pragma comment(lib, "msimg32.lib")
 #include<windows.h>
-
+#include<time.h>
+#define GALLERY_MAX 11
+#define RING_MAX 3
+#define WIN_SIZE 1000
+#define LEFT 10
+#define RIGHT -10
+#define JUMP 0
 enum IMAGE
 {
 	IMAGE_START,
@@ -26,4 +33,13 @@ enum IMAGE
 	IMAGE_CHAR2,
 	IMAGE_CHAR3,
 	IMAGE_MAX
+};
+
+struct MyIMG
+{
+	int m_iIndex;
+	POINT m_Point;
+	SIZE m_Size;
+	RECT m_Rect1;
+	RECT m_Rect2;
 };

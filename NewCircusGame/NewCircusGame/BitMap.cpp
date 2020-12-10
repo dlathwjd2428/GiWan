@@ -18,7 +18,7 @@ void BitMap::Init(HDC hdc, LPCWSTR FileName)
 
 void BitMap::Draw(HDC hdc, POINT pt, SIZE Size)
 {
-	TransparentBlt(hdc, pt.x, pt.y, pt.x + Size.cx, pt.y + Size.cy, m_hMemDC, 0, 0, m_Size.cx, m_Size.cy, RGB(255, 0, 255));
+	TransparentBlt(hdc, pt.x, pt.y, Size.cx, Size.cy, m_hMemDC, 0, 0, m_Size.cx, m_Size.cy, RGB(255, 0, 255));
 }
 
 BitMap::~BitMap()
