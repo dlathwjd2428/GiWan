@@ -1,0 +1,69 @@
+#pragma once 
+#pragma comment(lib, "msimg32.lib")
+#include"Font_Back_MG.h"
+#include<time.h>
+
+#define WIN_SIZE 1000
+#define MAX 10
+#define LEFT 10
+#define RIGHT -15
+#define JUMP -50
+#define GRAVITY 5
+#define DIE -10
+#define WIN -20
+
+enum IMG
+{
+	IMAGE_START,
+	IMAGE_LANE = 0,
+	IMAGE_DECO,
+	IMAGE_PEOPLE1,
+	IMAGE_PEOPLE2,
+	IMAGE_DIE,
+	IMAGE_GOAL,
+	IMAGE_RING1,
+	IMAGE_RING1_RIGHT,
+	IMAGE_RING2,
+	IMAGE_RING2_RIGHT,
+	IMAGE_RING3,
+	IMAGE_RING3_RIGHT,
+	IMAGE_FIREPOT1,
+	IMAGE_FIREPOT2,
+	IMAGE_MITER,
+	IMAGE_PLAYER1,
+	IMAGE_PLAYER2,
+	IMAGE_PLAYER3,
+	IMAGE_WIN1,
+	IMAGE_WIN2,
+	IMAGE_MAX
+};
+
+enum OBJECT
+{
+	OBJECT_START,
+	OBJECT_LANE = 0,
+	OBJECT_PEOPLE,
+	OBJECT_MITER,
+	OBJECT_GOAL,
+	OBJECT_FIREPOT,
+	OBJECT_RING,
+	OBJECT_MAX
+};
+
+enum CHAR_STATE
+{
+	 CHAR_IDLE,
+	 CHAR_MOVE,
+	 CHAR_JUMP,
+	 CHAR_DIE,
+	 CHAR_WIN
+};
+
+struct MyIMG
+{
+	int m_iIndex;
+	POINT m_Point;
+	SIZE m_Size;
+	RECT m_Rect1;
+	RECT m_Rect2;
+};
