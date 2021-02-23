@@ -18,6 +18,7 @@ public:
 	void UpdateBoard(int Exist, POINT PrevPt, POINT CurPt);
 	void DrawBoard(HDC hdc);
 	bool KingCheck(HWND hWnd);
+	bool FindExist(int Exist);
 	inline int GetExist(int x, int y) { return m_arrBoard[y / 100][x / 100].m_iExist; }
 	inline void SetKillPoint(POINT pt) { m_KillPoint = pt; }
 	inline POINT GetKillPoint() { return m_KillPoint; }

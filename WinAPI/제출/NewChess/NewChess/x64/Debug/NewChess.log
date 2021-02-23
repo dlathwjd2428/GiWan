@@ -1,0 +1,5 @@
+﻿  Piece.cpp
+c:\users\a10\desktop\newchess\newchess\piece.cpp(34): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a10\desktop\newchess\newchess\piece.cpp(104): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+c:\users\a10\desktop\newchess\newchess\piece.cpp(113): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+  NewChess.vcxproj -> C:\Users\A10\Desktop\NewChess\x64\Debug\NewChess.exe

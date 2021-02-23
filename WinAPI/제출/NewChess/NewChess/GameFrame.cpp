@@ -28,10 +28,7 @@ void GameFrame::UpdateGame(HWND hWnd, HDC hdc, POINT pt)
 	{
 		Click(hWnd, pt);
 		if (Board::GetInstance()->KingCheck(hWnd))
-		{
-			EndGame();
 			SetGame(hdc);
-		}
 		Draw(hdc);
 		m_iClock = clock();
 	}
@@ -61,15 +58,15 @@ void GameFrame::Click(HWND hWnd, POINT pt)
 
 void GameFrame::EndGame()
 {
-	m_arrPlayer[EXIST_WHITE].~Player();
-	m_arrPlayer[EXIST_BLACK].~Player();
-	DeleteObject(m_hFrame);
-	SelectObject(m_hGameFrame, m_hOldFrame);
-	DeleteDC(m_hGameFrame);
+	m_arrPlayer[EXIST_WHITE].DeletePiece();
+	m_arrPlayer[EXIST_BLACK].DeletePiece();
 	delete Res_MG::GetInstance();
 	delete Board::GetInstance();
 }
 
 GameFrame::~GameFrame()
 {
+	DeleteObject(m_hFrame);
+	SelectObject(m_hGameFrame, m_hOldFrame);
+	DeleteDC(m_hGameFrame);
 }

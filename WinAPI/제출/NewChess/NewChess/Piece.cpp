@@ -125,8 +125,7 @@ bool Piece::KingCheck()
 {
 	for (int i = 0; i < m_vAtk.size(); i++)
 	{
-		if (Board::GetInstance()->GetExist(m_vAtk[i].m_Point.x, m_vAtk[i].m_Point.y) == EXIST_BLACK_KING ||
-			Board::GetInstance()->GetExist(m_vAtk[i].m_Point.x, m_vAtk[i].m_Point.y) == EXIST_WHITE_KING)
+		if (Board::GetInstance()->GetExist(m_vAtk[i].m_Point.x, m_vAtk[i].m_Point.y) == m_iEnemyColor + 2)
 			return true;
 	}
 	return false;

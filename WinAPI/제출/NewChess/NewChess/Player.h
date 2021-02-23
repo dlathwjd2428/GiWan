@@ -17,6 +17,7 @@ public:
 	void Die(POINT pt);
 	void PawnChange();
 	void KingCheck(HWND hWnd);
+	void DeletePiece();
 	Player();
 	~Player();
 };

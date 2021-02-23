@@ -146,9 +146,8 @@ void Player::Die(POINT pt)
 void Player::PawnChange()
 {
 	POINT pt = m_parrPiece[m_iSaveIndex]->GetPoint();
-	int Exist = Board::GetInstance()->GetExist(pt.x, pt.y);
 	int Index = m_parrPiece[m_iSaveIndex]->GetIndex();
-	if (( Exist != EXIST_BLACK_KING && Exist != EXIST_WHITE_KING)
+	if (Board::GetInstance()->FindExist(m_iEnemy + 2)
 		&& (Index == IMAGE_B_PAWN || Index == IMAGE_W_PAWN) && (pt.y == 0 || pt.y == 700))
 	{
 		POINT tmpPoint = m_parrPiece[m_iSaveIndex]->GetPoint();
@@ -204,8 +203,12 @@ void Player::KingCheck(HWND hWnd)
 	}
 }
 
-Player::~Player()
+void Player::DeletePiece()
 {
 	for (int i = 0; i < PIECE_MAX; i++)
 		delete m_parrPiece[i];
+}
+
+Player::~Player()
+{
 }

@@ -88,6 +88,18 @@ bool Board::KingCheck(HWND hWnd)
 	return false;
 }
 
+bool Board::FindExist(int Exist)
+{
+	for (int y = 0; y < ROOM; y++)
+	{
+		for (int x = 0; x < ROOM; x++)
+		{
+			if (m_arrBoard[y][x].m_iExist == Exist)
+				return true;
+		}
+	}
+	return false;
+}
 Board::~Board()
 {
 }
